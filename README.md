@@ -5,7 +5,7 @@ Generates spiral search paths for concave free space
 Before you code, include this line on the top of your .py file
 ```python
 from modules.geometry import *
-``` 
+```
 
 ## API examples
 
@@ -15,6 +15,6 @@ print(p1)
 p2 = Point(1,1)
 print(p2)
 
+blablabla...
+
 ```
-
-
