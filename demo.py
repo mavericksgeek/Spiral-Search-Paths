@@ -1,4 +1,4 @@
-from geometry import *
+from modules.geometry import *
 
 
 p1 = Point(3,4) #create point by given x, y
@@ -14,7 +14,7 @@ print(v1)
 v2 = Vector(3,5) #create vector by given vector(Vx, Vy)
 print(v2)
 
-print( v1.dot(v2) )    #dot product 
+print( v1.dot(v2) )    #dot product
 print( v1.cross(v2) )  #cross product
 
 s1 = Segment(Point(0,0), Point(5,0)) #create segment by given two points
