@@ -7,7 +7,7 @@
 ### DO NOT CHANGE THE FUNCTION NAMES, INPUTS, OR RETURN OUTPUT TYPE! ###
 ########################################################################
 
-from geometry import *
+from modules.geometry import *
 
 
 ## Function ##############################################
@@ -20,7 +20,7 @@ def _getRandomPolygon():
 
 # Takes in boundry polygon and returns list of convex_polygon
 def _getSubDivision(concave_polygon):
-  # return list_of_polygons	
+  # return list_of_polygons
   pass
 
 # Takes in a list of spirals and a boundry polygon

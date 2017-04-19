@@ -29,7 +29,7 @@ class Point:
     v1 = Vector(SegmentA.p1.x - self.x, SegmentA.p1.y - self.y)
     v2 = Vector(SegmentA.p2.x - self.x, SegmentA.p2.y - self.y)
     return v1.cross(v2) == 0 and v1.dot(v2) <= 0
-    
+
 
 class Vector:
 
@@ -37,7 +37,7 @@ class Vector:
     self.x = x
     self.y = y
     self.length = (self.x * self.x + self.y * self.y) ** 0.5
-    
+
   def __repr__(self):
     return "Vector(%.2f, %.2f)" %(self.x, self.y)
 
@@ -58,7 +58,7 @@ class Vector:
 
   def cross(self, vector):
     return self.x * vector.y - self.y * vector.x
-  
+
 
 class Segment:
 
@@ -68,7 +68,7 @@ class Segment:
     self.v1 = Vector(self.p2.x - self.p1.x, self.p2.y - self.p1.y) #create two vectors for further applications
     self.v2 = -self.v1
     self.length = self.v1.length
-  
+
   def __repr__(self):
     return "Segment[%s, %s]" %(self.p1, self.p2)
 
@@ -94,19 +94,15 @@ class Segment:
     return False
 
 class Polygon:
-  
+
   def __init__(self, list_of_points):
     """ the list of points should be in the succsessive order """
     self.vertices = list_of_points
 
   def __repr__(self):
     return "Polygon(%s)" %self.vertices
-		
+
   def checkConvex(list_of_points):
     # Sahana's code here
     # return true/false
     pass
-
-
-
-
