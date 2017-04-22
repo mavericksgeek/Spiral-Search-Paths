@@ -5,8 +5,8 @@ class Point:
         self.y = y
 
     def __repr__(self):
-        #return "%.13f, %.13f" %(self.x, self.y)
-        return "%.13f,%.13f" %(self.y, self.x) + ",95"
+        return "%.13f, %.13f" %(self.x, self.y)
+        # return "%.13f,%.13f" %(self.y, self.x) + ",95"
 
     def __sub__(self, p):
         return Vector(self.x - p.x, self.y - p.y)
@@ -19,6 +19,9 @@ class Point:
 
     def __ne__(self, pointA):
         return self.x != pointA.x or self.y != pointA.y
+
+    def __hash__(self):
+        return hash((self.x, self.y))
 
     def distanceToPoint(self, pointA):
         return ( (self.x - pointA.x) ** 2 + (self.y - pointA.y) ** 2 ) ** 0.5
@@ -135,6 +138,7 @@ class Polygon:
         """ the list of points should be in the succsessive order """
         self.vertices = list_of_points
         self.centroid = self.getCentroid()
+        self.endpoint = None
 
     def __repr__(self):
         return "Polygon(%s)" %self.vertices
@@ -169,8 +173,16 @@ class Polygon:
                 if len(spiralPath) == flag_number:
                    break
 
-        print(len(spiralPath))
+        self.endpoint = spiralPath[-1] #reset the value of endpoint
         return spiralPath
+
+    def getTransitionPathToNextPolygon(self, polygonA):
+        temp = list(set(self.vertices).intersection(set(polygonA.vertices)))
+        next_point = min(temp, key = lambda point: self.endpoint.distanceToPoint(point))
+        return next_point
+
+    def reorderVertice(self, index):
+        self.vertices = self.vertices[index:] + self.vertices[:index]
 
     def checkConvex(list_of_points):
         # Sahana's code here

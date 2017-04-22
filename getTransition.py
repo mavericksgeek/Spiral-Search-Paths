@@ -1,3 +1,5 @@
+import math
+
 def _getTransition(end_point, previous_polygon, current_polygon):
     #list(set(previous_polygon).intersection(current_polygon))
     edge_points = []
@@ -21,7 +23,7 @@ def _getTransition(end_point, previous_polygon, current_polygon):
     return start_point
 
 
-end_point = [7,8] 
+end_point = [7,8]
 previous_polygon = [[1,2],[2,3],[3,4],[3,9]]
 current_polygon = [[1,2],[4,3],[5,6],[2,3]]
 
