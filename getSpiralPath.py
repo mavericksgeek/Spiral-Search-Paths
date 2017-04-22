@@ -1,52 +1,58 @@
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
- 
+
 This is a temporary script file.
 """
 import math
- 
+"""
 def distance(A, B):
     return math.sqrt((A[0]-B[0])*(A[0]-B[0])+(A[1]-B[1])*(A[1]-B[1]))
-    
+
+    #get distance between two points
+
 def midpoint(p1, p2):
     tempMid = [(p1[0]+p2[0])/2.0,(p1[1]+p2[1])/2.0]
     return tempMid
- 
+"""
+
+"""???
 def line(p1, p2):
     m=(p1[1]-p2[1])/(p1[0]-p2[0])
-    b=p1[1]-(m*p1[0])
+    b=p1[1]-(m*p1[0]) # c = y - m*x
     p3 = [m, b]
     return p3
- 
+"""
 def shift(value, centroid, l2):
     bMinus = -1*value+l2[1]
     bPlus = value+l2[1]
     p1 = [0,bMinus]
     p2 = [0, bPlus]
     d1 = distance(centroid, p1)
-    d2 = distance(centroid, p2)    
+    d2 = distance(centroid, p2)
     d1 = math.fabs((-1*l2[0]*centroid[0])+(1*centroid[1])-bMinus)/(math.sqrt(l2[0]*l2[0]+1))
-    d2 = math.fabs((-1*l2[0]*centroid[0])+(1*centroid[1])-bPlus)/(math.sqrt(l2[0]*l2[0]+1))    
+    d2 = math.fabs((-1*l2[0]*centroid[0])+(1*centroid[1])-bPlus)/(math.sqrt(l2[0]*l2[0]+1))
     if(math.fabs(d1)>math.fabs(d2)):
         l2[1] = bPlus
     else:
         l2[1]=bMinus
     return l2
- 
+
+"""
 def intersect(l1,l2):
     x = (l2[1]-l1[1])/(l1[0]-l2[0])
     y = l1[0]*x+l1[1]
     p3 = [x,y]
     return p3
- 
- 
+"""
+
+"""
 def distanceSegment(centroid, p1, p2):
     A = centroid[0] - p1[0]
     B = centroid[1] - p1[1]
     C = p2[0] - p1[0]
     D = p2[1] - p1[1]
- 
+
     dot = A * C + B * D
     len_sq = C * C + D * D
     param = -1;
@@ -65,27 +71,29 @@ def distanceSegment(centroid, p1, p2):
     dx = centroid[0] - xx
     dy = centroid[1] - yy
     return math.sqrt(dx * dx + dy * dy)
- 
+"""
+
+
 def getCircleLineIntersectionPoint(centroid, A, B, center, radius):
         baX = B[0] - A[0]
         baY = B[1] - A[1]
         caX = center[0] - A[0]
         caY = center[1] - A[1];
- 
+
         a = baX * baX + baY * baY
         bBy2 = baX * caX + baY * caY
         c = caX * caX + caY * caY - radius * radius;
- 
+
         pBy2 = bBy2 / a;
         q = c / a;
- 
+
         disc = pBy2 * pBy2 - q;
-        
+
         tmpSqrt = math.sqrt(disc)
         abScalingFactor1 = -pBy2 + tmpSqrt
         abScalingFactor2 = -pBy2 - tmpSqrt
- 
-        p1 = [A[0] - baX * abScalingFactor1, A[1]- baY * abScalingFactor1] 
+
+        p1 = [A[0] - baX * abScalingFactor1, A[1]- baY * abScalingFactor1]
          # abScalingFactor1 == abScalingFactor2
         if disc is 0:
             return p1
@@ -94,7 +102,7 @@ def getCircleLineIntersectionPoint(centroid, A, B, center, radius):
         if distance(p1,centroid) < distance(p2,centroid):
             return p1
         return p2
- 
+
 def printConvexSpiral(spacing,boundaryPoints):
     print 'Boundary Points'
     for point in boundaryPoints:
@@ -118,7 +126,7 @@ def printConvexSpiral(spacing,boundaryPoints):
     ySum=0
     aSum=0
     for i in range(0,len(boundaryPoints) - 1):
-        xi = boundaryPoints[i][0] 
+        xi = boundaryPoints[i][0]
         yi = boundaryPoints[i][1]
         print "%f, %f"%(xi,yi)
         xi1 = boundaryPoints[i+1][0]
@@ -147,14 +155,14 @@ def printConvexSpiral(spacing,boundaryPoints):
     slope1 = (boundaryPoints[0][1]-tempMid[1])/(boundaryPoints[0][0]-tempMid[0])
     b1 = boundaryPoints[0][1] - (slope1*boundaryPoints[0][0])
     l1=line(boundaryPoints[0],tempMid)
-    
+
     #find equation parallel to the first drawn edge
     slope2 = (boundaryPoints[1][1]-temp2[1])/(boundaryPoints[1][0]-temp2[0])
     b2 = temp2[1]-(slope2*temp2[0])
     l2 = line(boundaryPoints[1],temp2)
-    
+
     #shift l2 over towards the centroid
-    value= math.sqrt(slope2*slope2 + 1)*spacing        
+    value= math.sqrt(slope2*slope2 + 1)*spacing
     l2 = shift(value, centroid, l2)
     bMinus= -1*(math.sqrt(slope2*slope2+1)*spacing)+b2
     bPlus= math.sqrt(slope2*slope2+1)*spacing+b2
@@ -167,7 +175,7 @@ def printConvexSpiral(spacing,boundaryPoints):
         b2=bPlus
     else:
         b2=bMinus
-        
+
     #find the interscetion of line1 and line2
     inter=intersect(l1,l2);
     x = (b2-b1)/(slope1-slope2)
@@ -208,14 +216,14 @@ def printConvexSpiral(spacing,boundaryPoints):
                 oldL=newL
                 if(distanceSegment(centroid,path[-1],path[-2]) < spacing):
                     keepGoing=False
-    
+
     #add centroid
     path.append(centroid)
     print "Final path"
     for point in path:
         print " %f, %f"%(point[0], point[1])
-                                      
-         
+
+
 def boundaryPointsdef():
     boundaryPoints = []
     boundaryPoints.append([30.577899403551037,-96.35228859798126])
@@ -228,6 +236,5 @@ def boundaryPointsdef():
 spacing = .00004
 boundaryPoints = boundaryPointsdef()
 #print boundaryPoints
- 
-printConvexSpiral(spacing,boundaryPoints)
 
+printConvexSpiral(spacing,boundaryPoints)
