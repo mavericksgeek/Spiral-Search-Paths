@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+<polygon points="0,0 300,0 300,200 200,200 200,100 100,100 100,200 0,200 0,0 " style="fill:red;stroke:whitestroke-width:1" />
+-------------------
+<polygon points="300,0 300,200 200,200 200,100 " style="fill:blue;stroke:whitestroke-width:1" />
+<polygon points="0,0 300,0 200,100 100,100 " style="fill:blue;stroke:whitestroke-width:1" />
+<polygon points="0,0 100,100 100,200 0,200 0,0 " style="fill:blue;stroke:whitestroke-width:1" />
+</svg>
