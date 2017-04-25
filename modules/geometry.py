@@ -1,3 +1,4 @@
+from __future__ import print_function
 class Point:
 
     def __init__(self, x, y):
@@ -205,3 +206,8 @@ class Polygon:
             string += str(p.x) + "\n"
             string += str(p.y) + "\n"
         return string
+
+    def to_disk(self):
+        f = open("poly.txt", "w")
+        string = self.to_string()
+        print(string, file=f)
