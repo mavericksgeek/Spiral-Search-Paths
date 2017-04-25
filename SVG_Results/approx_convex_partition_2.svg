@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	<!-- Two polygons processed by approx_convex_partition_2 -->
+	<!-- Notes: Partitions outside of the polygon, which is wrong -->
+	<!-- Connecting point -->
+	<!-- Before -->
+	<polygon points="0,0 0,200 100,200 100,100 200,100 200,200 300,200 300,0 0,0 " style="fill:red;stroke:blue;stroke-width:1" />
+	<!-- ------------------- -->
+	<polygon points="100,200 100,100 200,100 200,200 " style="fill:blue;stroke:white;stroke-width:1" />
+	<!-- <polygon points="0,0 0,200 100,200 200,200 300,200 300,0 0,0 " style="fill:purple;stroke:white;stroke-width:1" /> -->
+
+	
+	<!-- Without connecting point -->
+	<!-- Before -->
+	<!-- <polygon points="0,0 0,200 100,200 100,100 200,100 200,200 300,200 300,0 " style="fill:red;stroke:white;stroke-width:1" /> -->
+	<!-- after -->
+	<!-- <polygon points="0,0 0,200 100,200 200,200 300,200 300,0 " style="fill:purple;stroke:white;stroke-width:1" /> -->
+	<!-- <polygon points="100,200 100,100 200,100 200,200 " style="fill:purple;stroke:white;stroke-width:1" /> -->
+
+</svg>
+ 
