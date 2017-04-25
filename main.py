@@ -44,6 +44,7 @@ import randomPolygon
 
 def main():
  print("Experimented Started")
+ print(randomPolygon.demoPolygon(1))
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":
     main()
