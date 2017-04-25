@@ -198,3 +198,10 @@ class Polygon:
                 if newsign != fsign: return False
             i +=1
         return True
+
+    def to_string(self):
+        string = ""
+        for p in self.vertices:
+            string += str(p.x) + "\n"
+            string += str(p.y) + "\n"
+        return string
