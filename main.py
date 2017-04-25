@@ -20,6 +20,14 @@ def _getRandomPolygon():
 
 # Takes in boundry polygon and returns list of convex_polygon
 def _getSubDivision(concave_polygon):
+  if checkConvex(concave_polygon):
+  	return concave_polygon
+  # send_to_cgal(concave_polygon)
+  # list_of_polygons = read_back_cgal()
+  
+  # polygon will need to be in ccw order
+  # see if polygons can be returned an order
+  
   # return list_of_polygons
   pass
 

@@ -23,56 +23,46 @@ typedef std::list<Polygon_2>                                Polygon_list;
 typedef CGAL::Creator_uniform_2<int, Point_2>               Creator;
 typedef CGAL::Random_points_in_square_2<Point_2, Creator>   Point_generator;
 
-void make_polygon(Polygon_2& polygon)
+void make_test_polygon(Polygon_2& polygon)
 {
-  //  polygon.push_back(Point_2(391, 374));
-  //  polygon.push_back(Point_2(240, 431));
-  //  polygon.push_back(Point_2(252, 340));
-  //  polygon.push_back(Point_2(374, 320));
-  //  polygon.push_back(Point_2(289, 214));
-  //  polygon.push_back(Point_2(134, 390));
-  //  polygon.push_back(Point_2( 68, 186));
-  //  polygon.push_back(Point_2(154, 259));
-  //  polygon.push_back(Point_2(161, 107));
-  //  polygon.push_back(Point_2(435, 108));
-  //  polygon.push_back(Point_2(208, 148));
-  //  polygon.push_back(Point_2(295, 160));
-  //  polygon.push_back(Point_2(421, 212));
-  //  polygon.push_back(Point_2(441, 303));
-	polygon.push_back(Point_2(0,0));
-	polygon.push_back(Point_2(0,200));
-	polygon.push_back(Point_2(100,200));
-	polygon.push_back(Point_2(100,100));
-	polygon.push_back(Point_2(200,100));
-	polygon.push_back(Point_2(200,200));
-	polygon.push_back(Point_2(300,200));
-	polygon.push_back(Point_2(300,0));
-	polygon.push_back(Point_2(0,0));
+	// Must be Counter clockwise
+	// polygon.push_back(Point_2(0,0));
+	// polygon.push_back(Point_2(300,0));
+	// polygon.push_back(Point_2(300,200));
+	// polygon.push_back(Point_2(200,200));
+	// polygon.push_back(Point_2(200,100));
+	// polygon.push_back(Point_2(100,100));
+	// polygon.push_back(Point_2(100,200));
+	// polygon.push_back(Point_2(0,200));
+	// polygon.push_back(Point_2(0,0));
+
+	
 }
 
 // Prints polygon in svg format
-// To use, run program and redirect to a file
-// Paste into an svg file and add body tags
-void print_poly(Polygon_2& polygon){
-	std::string stroke_color = "white";
+void print_poly(Polygon_2& polygon, std::string stroke_color, std::string fill_color){
 	std::cout << "<polygon points=\"";
 	for(Vertex_iterator it = polygon.vertices_begin(); it != polygon.vertices_end(); ++it){
 		std::cout << it->x() << "," << it->y() << " ";
 	}
-	std::cout << "\" " << "style=\"fill:red;stroke:" << stroke_color << 
+	std::cout << "\" " << "style=\"fill:" << fill_color << ";stroke:" << stroke_color << 
 	"stroke-width:1\" />" << '\n';
 }
 
+void print_svg(std::string body){
+	std::cout << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << '\n';
+	std::cout << body << '\n';
+	std::cout << "</svg>" << '\n';
+}
+
+// @TODO: Output as list of x y points counter clockwise	
 int main(int argc, char** args)
 {
    Polygon_2    polygon;
    Polygon_list partition_polys;
-/*
-   CGAL::random_polygon_2(50, std::back_inserter(polygon),
-                          Point_generator(100));
-*/
-   make_polygon(polygon);
-	 print_poly(polygon);
+													
+   make_test_polygon(polygon);
+	 print_poly(polygon, "white", "red");
 	 std::cout << "-------------------" << '\n';
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
@@ -84,7 +74,7 @@ int main(int argc, char** args)
                                             partition_polys.end()));
 
 	 for(std::list<Polygon_2>::iterator it = partition_polys.begin(); it != partition_polys.end(); ++it){
-		 print_poly(*it);
+		 print_poly(*it, "white", "blue");
 	 }
    return 0;
 }
