@@ -42,23 +42,27 @@ import randomPolygon
   # return spiral
   # pass
 
-# Reads polygon from disk; must be called after to_disk or cgal code
-def from_disk():
+# Reads polygon list from disk; must be called after to_disk or cgal code
+def poly_list_from_disk():
     # read from file
     f = open("poly.txt", "r")
     lines = f.readlines()
     points = []
+    polygons = []
     xory = 0 # x = x , 1 = y , 2 = both
     x = -1
     y = -1
     for line in lines:
-        line = "".join(line.split()) # remove whitespace
-        if line != "":
+        line = "".join(line.split()) # remove ALL whitespace
+        if line == "p":
+            polygons.append(Polygon(points))
+            points = []
+        elif line != "":
             if xory == 0:
-                x = int(line)
+                x = float(line)
                 xory = 1
             elif xory == 1:
-                y = int(line)
+                y = float(line)
                 xory = 2
             elif xory == 2:
                 p = Point(x,y)
@@ -66,16 +70,15 @@ def from_disk():
                 x = -1
                 y = -1
                 xory = 0
-            else:
-                print("Error from_disk(): Unknown char in poly.txt")
-    return Polygon(points)
-
+        else:
+            print("Error from_disk(): Unknown char in poly.txt")
+    return polygons
 
 def main():
     print("Experimented Started")
-    poly = randomPolygon.demoPolygon(1)
-    poly.to_disk()
-    print(from_disk())
+    # poly = randomPolygon.demoPolygon(1)
+    # poly.to_disk()
+    print(poly_list_from_disk())
 
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":

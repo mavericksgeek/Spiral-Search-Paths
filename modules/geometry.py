@@ -205,6 +205,7 @@ class Polygon:
         for p in self.vertices:
             string += str(p.x) + "\n"
             string += str(p.y) + "\n"
+        string += "p"
         return string
 
     def to_disk(self):
