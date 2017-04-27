@@ -105,13 +105,18 @@ def main():
     searchpath = []
     last_polygon = None
     # Take each polygon
+    next_point = poly_list[0].vertices[0]
     for poly in poly_list:
-        searchpath += poly.getSpiralPathToCentroid(2)
+        #reorder to set to next start point in the polygon
+        poly.reorderVertice(next_point)
+        #get coordinates of current polygon
+        searchpath += poly.getSpiralPathToCentroid(7)
         if last_polygon != None:
-            searchpath += poly.getTransitionPathToNextPolygon(last_polygon)
-    print(searchpath)
+            next_point = poly.getTransitionPathToNextPolygon(last_polygon)
+        last_polygon = poly
+    print(searchpath)[M G0
     print(search_path_to_svg(searchpath))
 
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":
-    main()
+main()

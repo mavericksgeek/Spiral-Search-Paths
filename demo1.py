@@ -55,3 +55,4 @@ index = next( (i for i, point in enumerate(polygon2) if point == new_start_point
 polygon2 = getReorder()
 polygon2.getSpiralPathToCentroid
 """
+
