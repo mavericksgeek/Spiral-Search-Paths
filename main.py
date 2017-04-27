@@ -45,7 +45,7 @@ import randomPolygon
 # Reads polygon list from disk; must be called after to_disk or cgal code
 def poly_list_from_disk():
     # read from file
-    f = open("poly.txt", "r")
+    f = open("polyList.txt", "r")
     lines = f.readlines()
     points = []
     polygons = []
