@@ -43,6 +43,27 @@ from subprocess import call
   # return spiral
   # pass
 
+# Converts a list of points to a list of svg lines; 
+# use by redirecting output to x.svg file
+def search_path_to_svg(search_path):
+    lines = []
+    line = ""
+    lp = None # last point
+    first = True
+    print(search_path)
+    # print("<svg>\n")
+    for p in search_path:
+        if not first:
+            line += "<line "
+            line +=" x1=" + str(lp.x) +" y1=" + str(lp.y) +" x2=" + str(p.x) +" y2=" + str(p.y)
+            line += " style=\"stroke:rgb(255,0,0);stroke-width:2\" />"
+            print(line)
+        line = ""
+        lp = p
+        first = False
+    # print("\n</svg>\n")
+        
+
 # Reads polygon list from disk; must be called after to_disk or cgal code
 def poly_list_from_disk():
     # read from file
@@ -83,11 +104,13 @@ def main():
     poly_list = poly_list_from_disk()
     searchpath = []
     last_polygon = None
+    # Take each polygon
     for poly in poly_list:
-        searchpath += poly.getSpiralPathToCentroid(1)
+        searchpath += poly.getSpiralPathToCentroid(2)
         if last_polygon != None:
             searchpath += poly.getTransitionPathToNextPolygon(last_polygon)
     print(searchpath)
+    print(search_path_to_svg(searchpath))
 
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":
