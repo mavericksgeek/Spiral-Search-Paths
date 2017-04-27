@@ -135,7 +135,6 @@ int main(int argc, char** args)
    Polygon_list partition_polys;
 	
   polygon = from_disk();
-  std::cout << polygon << std::endl;
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),

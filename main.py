@@ -9,6 +9,7 @@
 
 from modules.geometry import *
 import randomPolygon
+from subprocess import call
 
 ## Function ##############################################
 
@@ -75,10 +76,18 @@ def poly_list_from_disk():
     return polygons
 
 def main():
-    print("Experimented Started")
-    # poly = randomPolygon.demoPolygon(1)
-    # poly.to_disk()
-    print(poly_list_from_disk())
+    # print("Experimented Started")
+    poly = randomPolygon.demoPolygon(1)
+    poly.to_disk()
+    call(["./executable"]) # c++ cgal program
+    poly_list = poly_list_from_disk()
+    searchpath = []
+    last_polygon = None
+    for poly in poly_list:
+        searchpath += poly.getSpiralPathToCentroid(1)
+        if last_polygon != None:
+            searchpath += poly.getTransitionPathToNextPolygon(last_polygon)
+    print(searchpath)
 
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":

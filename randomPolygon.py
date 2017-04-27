@@ -14,6 +14,7 @@ def randomPolygon():
     return Polygon(list2)
 
 # Creates the polygon specified by selector
+# DON'T CONNECT THE LAST VERTEX TO FIRST VERTEX WITH AN OVERLAPPING VERTEXl
 def demoPolygon(selector):
     points = []
     if selector == 1:
@@ -25,7 +26,6 @@ def demoPolygon(selector):
         points.append(Point(100,100));
         points.append(Point(100,200));
         points.append(Point(0,200));
-        points.append(Point(0,0));
     else:
         print("There's no demo polygon that corressponds with your selection.")
     return Polygon(points)
