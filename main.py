@@ -71,7 +71,7 @@ def poly_list_from_disk():
     lines = f.readlines()
     points = []
     polygons = []
-    xory = 0 # x = x , 1 = y , 2 = both
+    xory = 0 # x = 0 , 1 = y , 2 = both
     x = -1
     y = -1
     for line in lines:
@@ -85,38 +85,52 @@ def poly_list_from_disk():
                 xory = 1
             elif xory == 1:
                 y = float(line)
-                xory = 2
-            elif xory == 2:
+                # xory = 2
                 p = Point(x,y)
                 points.append(p)
+                xory = 0
                 x = -1
                 y = -1
-                xory = 0
         else:
             print("Error from_disk(): Unknown char in poly.txt")
+    # print(polygons)
+    # print("---------------")
     return polygons
 
 def main():
     # print("Experimented Started")
-    poly = randomPolygon.demoPolygon(1)
-    poly.to_disk()
-    call(["./executable"]) # c++ cgal program
+    # poly = randomPolygon.demoPolygon(1)
+    # poly.to_disk()
+    
+    # call(["./executable"]) # c++ cgal program
     poly_list = poly_list_from_disk()
     searchpath = []
     last_polygon = None
+    """
+    #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
+    polygon1.getSpiralPathToCentroid(3)
+    new_start_point = polygon1.getTransitionPathToNextPolygon(polygon2)
+    index = next( (i for i, point in enumerate(polygon2) if point == new_start_point)) # find the index of new_start_point in polygon2
+    polygon2 = getReorder()
+    polygon2.getSpiralPathToCentroid
+    """
     # Take each polygon
     next_point = poly_list[0].vertices[0]
+    # index = next((i for i, point in enumerate(poly.vertices) if point == next_point))
+    print(poly_list)
     for poly in poly_list:
+        indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
         #reorder to set to next start point in the polygon
-        poly.reorderVertice(next_point)
+        # find the index of new_start_point in polygon2
+        poly.reorderVertice(indicies[0])
         #get coordinates of current polygon
         searchpath += poly.getSpiralPathToCentroid(7)
         if last_polygon != None:
             next_point = poly.getTransitionPathToNextPolygon(last_polygon)
         last_polygon = poly
-    print(searchpath)[M G0
-    print(search_path_to_svg(searchpath))
+    # print(searchpath)
+    # print(search_path_to_svg(searchpath))
 
 # Tells python to only run if called directly (not an import)
 if __name__ == "__main__":
-main()
+    main()

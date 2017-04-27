@@ -16,7 +16,9 @@ X = [Point(0,0), Point(0,6), Point(6,7), Point(6,0)]
 poly1 = Polygon(X)
 poly1.getSpiralPathToCentroid(2) #self.endpoint is created
 print("before", poly1)
-poly1.reorderVertice(2)
+next_point = Point(0,6)
+index = next((i for i, point in enumerate(poly1.vertices) if point == next_point))
+poly1.reorderVertice(index)
 print("after", poly1)
 
 Y = [Point(0,0), Point(0,6), Point(-6,6), Point(-6,0)]
@@ -55,4 +57,3 @@ index = next( (i for i, point in enumerate(polygon2) if point == new_start_point
 polygon2 = getReorder()
 polygon2.getSpiralPathToCentroid
 """
-
