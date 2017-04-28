@@ -8,6 +8,7 @@
 ########################################################################
 
 from modules.geometry import *
+from modules.export import *
 import randomPolygon
 from subprocess import call
 
@@ -25,10 +26,10 @@ from subprocess import call
  #  	return concave_polygon
   # send_to_cgal(concave_polygon)
   # list_of_polygons = read_back_cgal()
-  
+
   # polygon will need to be in ccw order
   # see if polygons can be returned an order
-  
+
   # return list_of_polygons
   # pass
 
@@ -43,7 +44,7 @@ from subprocess import call
   # return spiral
   # pass
 
-# Converts a list of points to a list of svg lines; 
+# Converts a list of points to a list of svg lines;
 # use by redirecting output to x.svg file
 def search_path_to_svg(search_path):
     lines = []
@@ -62,7 +63,7 @@ def search_path_to_svg(search_path):
         lp = p
         first = False
     # print("\n</svg>\n")
-        
+
 
 # Reads polygon list from disk; must be called after to_disk or cgal code
 def poly_list_from_disk():
@@ -101,7 +102,7 @@ def main():
     # print("Experimented Started")
     # poly = randomPolygon.demoPolygon(1)
     # poly.to_disk()
-    
+
     # call(["./executable"]) # c++ cgal program
     poly_list = poly_list_from_disk()
     searchpath = []

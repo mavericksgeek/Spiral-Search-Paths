@@ -15,11 +15,23 @@ CGAL Tutorial: http://doc.cgal.org/latest/Partition_2/index.html
 
 How to build a CGAL program:
 ```
-cd /path/to/your_program.cpp 
-cgal_create_CMakeLists -s executable 
-cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 . 
+cd /path/to/your_program.cpp
+cgal_create_CMakeLists -s executable
+cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 .
 make
 ```
+
+## API Reference
+### Exports waypoints
+To generate the txt file which will be used in MAVProxy, you should firstly import the module:
+```python
+from modules.export import *
+```
+And try to run this with your list of points and file name:
+```python
+createWaypointFile(list_of_waypoints, fileName="waypoints.txt")
+```
+
 
 ## examples
 
