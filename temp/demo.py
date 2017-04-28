@@ -33,3 +33,6 @@ print(poly1)
 for point in poly1.vertices:
   #you can manipulate the vertices in the list
   print(point)
+
+
+#createWaypointFile(poly1.vertices, 'test.txt')

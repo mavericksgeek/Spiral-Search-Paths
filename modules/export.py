@@ -1,5 +1,3 @@
-
-
 def createWaypointFile(list_of_waypoints, fileName="waypoints.txt"):
     path ="./library/"
     ######## paramters ########
