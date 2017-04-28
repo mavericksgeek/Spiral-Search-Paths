@@ -9,7 +9,6 @@
 
 from modules.geometry import *
 from modules.export import *
-import randomPolygon
 from subprocess import call
 
 ## Function ##############################################
@@ -98,15 +97,18 @@ def poly_list_from_disk():
     # print("---------------")
     return polygons
 
-def main():
-    # print("Experimented Started")
-    # poly = randomPolygon.demoPolygon(1)
-    # poly.to_disk()
+# Returns a list of 1 or more convex polygons
+def getSubDivision(polygon):
+    polygon.to_disk()
+    call(["./executable"]) # c++ cgal program
+    return poly_list_from_disk()
 
-    # call(["./executable"]) # c++ cgal program
-    poly_list = poly_list_from_disk()
-    searchpath = []
-    last_polygon = None
+def main():
+    print("Experimented Started")
+    poly = demoPolygon(1)
+    poly_list = getSubDivision(poly)
+
+
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
     polygon1.getSpiralPathToCentroid(3)
@@ -115,20 +117,22 @@ def main():
     polygon2 = getReorder()
     polygon2.getSpiralPathToCentroid
     """
-    # Take each polygon
-    next_point = poly_list[0].vertices[0]
-    # index = next((i for i, point in enumerate(poly.vertices) if point == next_point))
-    print(poly_list)
-    for poly in poly_list:
-        indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
-        #reorder to set to next start point in the polygon
-        # find the index of new_start_point in polygon2
-        poly.reorderVertice(indicies[0])
-        #get coordinates of current polygon
-        searchpath += poly.getSpiralPathToCentroid(7)
-        if last_polygon != None:
-            next_point = poly.getTransitionPathToNextPolygon(last_polygon)
-        last_polygon = poly
+    # searchpath = []
+    # last_polygon = None
+    # # Take each polygon
+    # next_point = poly_list[0].vertices[0]
+    # # index = next((i for i, point in enumerate(poly.vertices) if point == next_point))
+    # print(poly_list)
+    # for poly in poly_list:
+    #     indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
+    #     #reorder to set to next start point in the polygon
+    #     # find the index of new_start_point in polygon2
+    #     poly.reorderVertice(indicies[0])
+    #     #get coordinates of current polygon
+    #     searchpath += poly.getSpiralPathToCentroid(7)
+    #     if last_polygon != None:
+    #         next_point = poly.getTransitionPathToNextPolygon(last_polygon)
+    #     last_polygon = poly
     # print(searchpath)
     # print(search_path_to_svg(searchpath))
 

@@ -250,3 +250,21 @@ def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
     #sort them in the order of counter-clockwise
     poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y-poly.centroid.y, point.x-poly.centroid.x), reverse=True)
     return poly
+    
+# Helper Functions, outside of class #####################################
+# Creates the polygon specified by selector
+# DON'T CONNECT THE LAST VERTEX TO FIRST VERTEX WITH AN OVERLAPPING VERTEXl
+def demoPolygon(selector):
+    points = []
+    if selector == 1:
+        points.append(Point(0,0));
+        points.append(Point(300,0));
+        points.append(Point(300,200));
+        points.append(Point(200,200));
+        points.append(Point(200,100));
+        points.append(Point(100,100));
+        points.append(Point(100,200));
+        points.append(Point(0,200));
+    else:
+        print("There's no demo polygon that corressponds with your selection.")
+    return Polygon(points)
