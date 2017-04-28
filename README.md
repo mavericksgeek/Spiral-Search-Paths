@@ -32,6 +32,19 @@ And try to run this with your list of points and file name:
 createWaypointFile(list_of_waypoints, fileName="waypoints.txt")
 ```
 
+### Generate Random Polygon
+To generate a random polygon, you should include geometry module first:
+```python
+from modules.geometry import *
+```
+Then, you can use the function getRandomPolygon:
+```python
+getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices)
+```
+Note that you the input longitude and latitude should not be a float, you should input a int instead. If you want to get a random polygon boundary (with 5 vertices) around the lake at College Station, for example, the longitute is about -96.3511128 to -96.3514029 and the latitude is about 30.5775025 to 30.5778213, then you can write as follows:
+```python
+getRandomPolygon(-963514029, -963511128, 305775025, 30.5778213, 5)
+```
 
 ## examples
 
