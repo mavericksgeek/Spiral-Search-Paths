@@ -80,8 +80,6 @@ class Vector:
     def __rmul__(self, constant):
         return Vector(self.x * constant, self.y * constant)
 
-
-
     def dot(self, vector):
         return float(self.x * vector.x + self.y * vector.y)
 
