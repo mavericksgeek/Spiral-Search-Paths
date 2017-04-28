@@ -120,16 +120,13 @@ Polygon_2 from_disk(){
           }
           else if (xory == 1){
             y = atof(lines[i].c_str());
-            xory = 2;
-          }
-          else if (xory == 2){
             polygon.push_back(Point_2(x,y));
             x = -1;
             y = -1;
             xory = 0;
           }
       else{
-        std::cout << "Error from_disk(): Unknown char in poly.txt\n";
+        std::cout << "Error from_disk(): Unknown character " << lines[i] << std::endl;
       }
     }
     f.close();

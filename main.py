@@ -85,14 +85,13 @@ def poly_list_from_disk():
                 xory = 1
             elif xory == 1:
                 y = float(line)
-                # xory = 2
                 p = Point(x,y)
                 points.append(p)
                 xory = 0
                 x = -1
                 y = -1
         else:
-            print("Error from_disk(): Unknown char in poly.txt")
+            print("Error from_disk(): Unknown character" + str(line))
     # print(polygons)
     # print("---------------")
     return polygons
@@ -129,6 +128,7 @@ def main():
     # print(poly_list)
     for poly in poly_list:
         indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
+        print("indicies: " + str(indicies))
         #reorder to set to next start point in the polygon
         # find the index of new_start_point in polygon2
         poly.reorderVertice(indicies[0])
