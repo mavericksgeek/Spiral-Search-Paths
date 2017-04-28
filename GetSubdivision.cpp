@@ -180,14 +180,44 @@ void make_test_polygon(Polygon_2& polygon)
 
 // @TODO: Output as list of x y points counter clockwise	
 // @TODO: Log data
-int main(int argc, char** args)
+int main(int argc, char** argv)
 {
+  // Init
    Polygon_2    polygon;
    Polygon_list partition_polys;
-   Point_2 coordinate = Point_2(1000,1000);
+   Point_2 coordinate;
+   int x = 10;
+   int y = 10;
+   int radius = 10;
+   int max_verticies = 10;
 	 bool isConvex = false;
+  // Parses options that start with '-' and adding ':' makes an arg mandontory
+  // r - double radius
+  // v - int number_vertecies
+  // x - Point_2 coordinate x
+  // y - Point_2 coordinate y
+  int opt = 0;
+  while ((opt = getopt(argc, argv, "r:v:x:y:")) != -1){
+   switch(opt) {
+     case 'x':
+         x = atoi(optarg);
+         break;
+     case 'y':
+         y = atoi(optarg);
+         break;
+     case 'r':
+        radius = atoi(optarg);
+        break;
+     case 'v':
+        max_verticies = atoi(optarg);
+        break;
+       default:
+   std::cerr << "Invalid Command Line Argument\n";
+   }
+  }
+  coordinate = Point_2(x,y);
   // polygon = from_disk();
-  random_poly(100, 100, coordinate, &polygon);
+  random_poly(radius, max_verticies, coordinate, &polygon);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
