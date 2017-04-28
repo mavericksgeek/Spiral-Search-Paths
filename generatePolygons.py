@@ -1,7 +1,16 @@
 from modules.geometry import *
 import randomPolygon
 
-Polygon1 = Polygon( [Point(0.01,0.00), Point(1.00,0.02), Point(3.001,3.003), Point(2.01,5.03), Point(0,5), Point(0,2.33)] )
+p1 = Point(-96.35111282486872,30.577821352883593)
+p2 = Point(-96.35105252319403,30.577738952738226)
+p3 = Point(-96.35098278437623,30.57762028386826)
+p4 = Point(-96.35096243867648,30.577601831274514)
+p5 = Point(-96.35103855263765,30.57748613262665)
+p6 = Point(-96.35116430471045,30.577461636024072)
+p7 = Point(-96.35140293901858,30.577502571702556)
+
+Polygon1 = Polygon( [p1,p2,p3,p4,p5,p6,p7] )
+
 
 #### paramters
 target_component = 0
@@ -24,7 +33,8 @@ txtFile.write(waypoint_line)
 
 for index, point in enumerate(Polygon1.vertices):
     temp_line ='%d\t%d\t%d\t%d\t'%(index, seq, frame, command)
-    temp_line+='%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t1\n' %(current, autocontinue, param1, param2, point.x, point.y, height)
+    #temp_line+='%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t1\n' %(current, autocontinue, param1, param2, point.x, point.y, height)
+    temp_line+='%.6f\t%.6f\t%.6f\t%.6f\t%.14f\t%.14f\t%.14f\t1\n' %(current, autocontinue, param1, param2, point.x, point.y, height)
     txtFile.write(temp_line)
     #print(temp_line)
 txtFile.close()
