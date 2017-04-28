@@ -1,4 +1,6 @@
 from __future__ import print_function
+import random
+import math
 class Point:
 
     def __init__(self, x, y):
@@ -6,7 +8,8 @@ class Point:
         self.y = y
 
     def __repr__(self):
-        return "%.13f, %.13f" %(self.x, self.y)
+        #return "%.13f, %.13f" %(self.x, self.y)
+        return "Point(%.10f, %.10f)" %(self.x, self.y)
         # return "%.13f,%.13f" %(self.y, self.x) + ",95"
 
     def __sub__(self, p):
@@ -210,3 +213,33 @@ class Polygon:
         f = open("poly.txt", "w")
         string = self.to_string()
         print(string, file=f)
+
+
+
+def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
+    poly = Polygon([Point(1,1)])
+    poly.vertices = list() #initilize the "blank" polygon
+    if min_log > max_log:
+        min_log, max_log = max_log, min_log
+    if min_lat > max_lat:
+        min_lat, max_lat = max_lat, min_lat
+
+    length_min_log = len(str(min_log).replace('-',''))
+    #length_max_log = len(str(max_log))
+    length_min_lat = len(str(min_lat).replace('-',''))
+    #length_max_lat = len(str(max_lat))
+
+    #generate number of points
+    for i in range(0, n_of_vertices):
+        log = random.randint(min_log, max_log) / (10.0 ** (length_min_log-2))
+        lat = random.randint(min_lat, max_lat) / (10.0 ** (length_min_lat-2))
+        poly.vertices.append(Point(log,lat))
+
+    #sort them in the order of counter-clockwise
+    poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y,point.x))
+    print(poly)
+    return poly
+
+
+
+getRandomPolygon(-97109384721, -97129383721, 27729384711, 27929384721, 5)
