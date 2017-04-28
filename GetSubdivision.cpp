@@ -35,15 +35,17 @@ typedef CGAL::Partition_traits_2<K>                         Traits;
 typedef Traits::Point_2                                     Point_2;
 typedef Traits::Polygon_2                                   Polygon_2;
 typedef Polygon_2::Vertex_iterator                          Vertex_iterator;
+typedef std::list<Point_2>::iterator                        Point_Iter;
 typedef std::list<Polygon_2>                                Polygon_list;
 typedef CGAL::Creator_uniform_2<int, Point_2>               Creator;
 typedef CGAL::Random_points_in_square_2<Point_2, Creator>   Point_generator;
 
 
-// Creates polygon with <= number_vertecies, all points are x distance from radius
-// Stores polygon in poly_buff and convex/concave in isConvex
-void random_poly(double radius, int number_vertecies,
-   const Polygon_2* poly_buff, const bool* isConvex){
+// Creates polygon with <= number_vertecies
+  // all points are radius distance coordinate point
+  // Stores polygon in poly_buff and convex/concave in isConvex
+void random_poly(double radius, int number_vertecies, Point_2 coordinate,
+   const Polygon_2* poly_buff){
   Polygon_2            polygon;
   std::list<Point_2>   point_set;
 
@@ -58,7 +60,16 @@ void random_poly(double radius, int number_vertecies,
           //  << std::endl;
   // std::copy(point_set.begin(), point_set.end(), out);
   // std::cout << std::endl;
+  // Move polygon near coordinate by translating all points
+  int x,y = 0;
+  for(Point_Iter it = point_set.begin(); it != point_set.end(); ++it ){
+    x = it->x() + coordinate.x();
+    y = it->y() + coordinate.y();
+    Point_2 temp(x,y);
+    *it = temp;
+  }
   
+  // Turn points into a polygon
   CGAL::random_polygon_2(point_set.size(), std::back_inserter(polygon),
                         point_set.begin());
 
@@ -173,9 +184,10 @@ int main(int argc, char** args)
 {
    Polygon_2    polygon;
    Polygon_list partition_polys;
+   Point_2 coordinate = Point_2(1000,1000);
 	 bool isConvex = false;
   // polygon = from_disk();
-  random_poly(100, 100, &polygon, &isConvex);
+  random_poly(100, 100, coordinate, &polygon);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
