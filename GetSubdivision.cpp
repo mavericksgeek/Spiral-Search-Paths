@@ -10,12 +10,25 @@
 #include <CGAL/partition_2.h>
 #include <CGAL/point_generators_2.h>
 #include <CGAL/random_polygon_2.h>
+#include <CGAL/Simple_cartesian.h>
+#include <CGAL/Polygon_2.h>
+#include <CGAL/Random.h>
+#include <CGAL/algorithm.h>
 #include <cassert>
 #include <list>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#ifdef CGAL_USE_GMP
+#include <CGAL/Gmpz.h>
+typedef CGAL::Gmpz RT;
+#else
+// NOTE: the choice of double here for a number type may cause problems
+//       for degenerate point sets
+#include <CGAL/double.h>
+typedef double RT;
+#endif
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Partition_traits_2<K>                         Traits;
@@ -25,6 +38,33 @@ typedef Polygon_2::Vertex_iterator                          Vertex_iterator;
 typedef std::list<Polygon_2>                                Polygon_list;
 typedef CGAL::Creator_uniform_2<int, Point_2>               Creator;
 typedef CGAL::Random_points_in_square_2<Point_2, Creator>   Point_generator;
+
+
+// Creates polygon with <= number_vertecies, all points are x distance from radius
+// Stores polygon in poly_buff and convex/concave in isConvex
+void random_poly(double radius, int number_vertecies,
+   const Polygon_2* poly_buff, const bool* isConvex){
+  Polygon_2            polygon;
+  std::list<Point_2>   point_set;
+
+  int size = number_vertecies;
+  // copy size points from the generator, eliminating duplicates, so the
+  // polygon will have <= size vertices
+  CGAL::copy_n_unique(Point_generator(radius), size,
+                     std::back_inserter(point_set));
+  //// Print random points
+  // std::ostream_iterator< Point_2 >  out( std::cout, " " );
+  // std::cout << "From the following " << point_set.size() << " points "
+          //  << std::endl;
+  // std::copy(point_set.begin(), point_set.end(), out);
+  // std::cout << std::endl;
+  
+  CGAL::random_polygon_2(point_set.size(), std::back_inserter(polygon),
+                        point_set.begin());
+
+  // std::cout << "The following simple polygon was made: " << std::endl;
+  std::cout << polygon << std::endl;
+}
 
 // Writes a list of polygons to the disk
 void poly_list_to_disk(Polygon_list* pl){
@@ -133,8 +173,9 @@ int main(int argc, char** args)
 {
    Polygon_2    polygon;
    Polygon_list partition_polys;
-	
-  polygon = from_disk();
+	 bool isConvex = false;
+  // polygon = from_disk();
+  random_poly(100, 100, &polygon, &isConvex);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
