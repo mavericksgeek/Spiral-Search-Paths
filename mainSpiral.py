@@ -12,5 +12,17 @@ p7 = Point(-96.35140293901858,30.577502571702556)
 
 Polygon1 = Polygon( [p1,p2,p3,p4,p5,p6,p7] )
 
+p01 = Point(0.0,0.0)
+p02 = Point(3.0,0.0)
+p03 = Point(3.0,3.0)
+p04 = Point(0.0,3.0)
 
-createWaypointFile(Polygon1.vertices, 'test.txt')
+Poly2 = Polygon( [p01,p02,p03,p04] )
+print(Poly2.getArea())
+
+
+
+#createWaypointFile(Polygon1.vertices, 'test.txt')
+
+#poly = getRandomPolygon(20,-20,20,-20,5)
+#print(poly)

@@ -186,6 +186,18 @@ class Polygon:
     def reorderVertice(self, index):
         self.vertices = self.vertices[index:] + self.vertices[:index]
 
+    def getArea(self):
+        temp = self.vertices[:]
+        temp.append(temp[0])
+        area = 0.0
+
+        for i in range(0, len(temp)-1):
+            v1 = temp[i] - Point(0.0,0.0)
+            v2 = temp[i+1] - Point(0.0,0.0)
+            area += v1.cross(v2)
+
+        return abs(area)/2.0
+
     def sign(x):
         if x >= 0: return 1
         else: return 0
