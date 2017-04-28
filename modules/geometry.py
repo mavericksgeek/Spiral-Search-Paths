@@ -198,6 +198,20 @@ class Polygon:
 
         return abs(area)/2.0
 
+    def isConvex(self):
+        vertices = self.vertices[:]
+        vertices.insert(0, vertices[-1])
+        vertices.append(vertices[1])
+        flag = (vertices[1] - vertices[0]).cross(vertices[2] - vertices[1])
+
+        for i in range(0,len(vertices) - 2):
+            v1 = vertices[i+1] - vertices[i]
+            v2 = vertices[i+2] - vertices[i+1]
+            new_sign = v1.cross(v2)
+            if new_sign * flag < 0:
+                return False
+        return True
+
     def sign(x):
         if x >= 0: return 1
         else: return 0
@@ -250,7 +264,7 @@ def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
     #sort them in the order of counter-clockwise
     poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y-poly.centroid.y, point.x-poly.centroid.x), reverse=True)
     return poly
-    
+
 # Helper Functions, outside of class #####################################
 # Creates the polygon specified by selector
 # DON'T CONNECT THE LAST VERTEX TO FIRST VERTEX WITH AN OVERLAPPING VERTEXl
