@@ -236,10 +236,5 @@ def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
         poly.vertices.append(Point(log,lat))
 
     #sort them in the order of counter-clockwise
-    poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y,point.x))
-    print(poly)
+    poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y-poly.centroid.y, point.x-poly.centroid.x), reverse=True)
     return poly
-
-
-
-getRandomPolygon(-97109384721, -97129383721, 27729384711, 27929384721, 5)
