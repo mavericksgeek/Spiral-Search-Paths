@@ -105,9 +105,13 @@ def getSubDivision(polygon):
 
 def main():
     print("Experimented Started")
-    poly = demoPolygon(1)
-    poly_list = getSubDivision(poly)
-
+    # poly = demoPolygon(1)
+    # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 15)
+    # poly_list = getSubDivision(poly)
+    poly_list = poly_list_from_disk()
+    print("Polygon List")
+    print(poly_list)
+    print("-------------------")
 
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
@@ -117,22 +121,22 @@ def main():
     polygon2 = getReorder()
     polygon2.getSpiralPathToCentroid
     """
-    # searchpath = []
-    # last_polygon = None
-    # # Take each polygon
-    # next_point = poly_list[0].vertices[0]
-    # # index = next((i for i, point in enumerate(poly.vertices) if point == next_point))
+    searchpath = []
+    last_polygon = None
+    # Take each polygon
+    next_point = poly_list[0].vertices[0]
+    # index = next((i for i, point in enumerate(poly.vertices) if point == next_point))
     # print(poly_list)
-    # for poly in poly_list:
-    #     indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
-    #     #reorder to set to next start point in the polygon
-    #     # find the index of new_start_point in polygon2
-    #     poly.reorderVertice(indicies[0])
-    #     #get coordinates of current polygon
-    #     searchpath += poly.getSpiralPathToCentroid(7)
-    #     if last_polygon != None:
-    #         next_point = poly.getTransitionPathToNextPolygon(last_polygon)
-    #     last_polygon = poly
+    for poly in poly_list:
+        indicies = [i for i, point in enumerate(poly.vertices) if point == next_point]
+        #reorder to set to next start point in the polygon
+        # find the index of new_start_point in polygon2
+        poly.reorderVertice(indicies[0])
+        #get coordinates of current polygon
+        searchpath += poly.getSpiralPathToCentroid(7)
+        if last_polygon != None:
+            next_point = poly.getTransitionPathToNextPolygon(last_polygon)
+        last_polygon = poly
     # print(searchpath)
     # print(search_path_to_svg(searchpath))
 
