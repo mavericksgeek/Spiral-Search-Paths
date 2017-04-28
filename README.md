@@ -46,7 +46,7 @@ If you want to get a random polygon boundary (with 5 vertices) around the lake a
 for example, the longitute is about -96.3511128 to -96.3514029 and the latitude is about 30.5775025 to 30.5778213, 
 then you can write as follows:
 ```python
-getRandomPolygon(-963514029, -963511128, 305775025, 30.5778213, 5)
+getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 5)
 ```
 
 ## examples
