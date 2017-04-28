@@ -216,8 +216,8 @@ int main(int argc, char** argv)
    }
   }
   coordinate = Point_2(x,y);
-  // polygon = from_disk();
-  random_poly(radius, max_verticies, coordinate, &polygon);
+  polygon = from_disk();
+  // random_poly(radius, max_verticies, coordinate, &polygon);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
