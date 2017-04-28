@@ -1,5 +1,61 @@
 import random
 from modules.geometry import *
+import random
+import time
+
+# def randomPolygon(pType, nVertices, nTrials):
+# 
+#     list2 = []
+# 
+#     number_of_vertices = nVertices
+#     number_of_trials = nTrials
+#     polygon_type = pType
+#     countTrials = 0
+#     
+#     while True:
+# 
+#         time_taken = 0
+#         start_time = int(round(time.time() * 1000))
+#         list2 = []
+# 
+#         for count in range(0,number_of_vertices):
+#             list_of_X = random.randrange(0,50)
+#             list_of_Y = random.randrange(0,50)
+#             list2.append((list_of_X,list_of_Y))
+# 
+#         ifConvex = checkConvex(list2)
+#         
+#         if ifConvex:
+# 
+#             if polygon_type == "convex":
+# 
+#                 print("Convex")
+#                 end_time = int(round(time.time() * 1000))
+#                 time_taken = end_time - start_time
+#                 countTrials = countTrials + 1
+#                 print("Trial") ,
+#                 print(countTrials) ,
+#                 print("Time Taken in milliseconds") ,
+#                 print(time_taken) ,
+#                 print(list2) 
+#         else: 
+# 
+#             if polygon_type == "concave":
+# 
+#                 print("Concave")
+#                 end_time = int(round(time.time() * 1000))
+#                 time_taken = end_time - start_time
+#                 countTrials = countTrials + 1
+#                 print("Trial") ,
+#                 print(countTrials) ,
+#                 print("Time Taken in milliseconds") ,
+#                 print(time_taken) ,
+#                 print(list2)
+#         
+#         
+#         if countTrials == number_of_trials:
+#             break
+#        
 
 def randomPolygon():
     list2 = []
