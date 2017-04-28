@@ -15,10 +15,11 @@ Polygon1 = Polygon( [p1,p2,p3,p4,p5,p6,p7] )
 p01 = Point(0.0,0.0)
 p02 = Point(3.0,0.0)
 p03 = Point(3.0,3.0)
+p05 = Point(1.0,1.0)
 p04 = Point(0.0,3.0)
 
-Poly2 = Polygon( [p01,p02,p03,p04] )
-print(Poly2.getArea())
+Poly2 = Polygon( [p01,p02,p03,p05,p04] )
+print(Poly2.isConvex())
 
 
 
