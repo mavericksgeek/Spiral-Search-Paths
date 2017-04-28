@@ -15,10 +15,12 @@ CGAL Tutorial: http://doc.cgal.org/latest/Partition_2/index.html
 
 How to build a CGAL program:
 ```
-cd /path/to/your_program.cpp
+sudo apt-get install cmake
+cd /path/to/
 cgal_create_CMakeLists -s executable
-cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 .
+cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 . (The dot means current directory)
 make
+./executable
 ```
 
 ## API Reference
