@@ -18,17 +18,18 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <time.h>
-#ifdef CGAL_USE_GMP
-#include <CGAL/Gmpz.h>
-typedef CGAL::Gmpz RT;
-#else
+// #ifdef CGAL_USE_GMP
+// #include <CGAL/Gmpz.h>
+// typedef CGAL::Gmpz RT;
+// #else
 // NOTE: the choice of double here for a number type may cause problems
 //       for degenerate point sets
 #include <CGAL/double.h>
 typedef double RT;
-#endif
+// #endif
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef CGAL::Partition_traits_2<K>                         Traits;
@@ -86,8 +87,8 @@ void poly_list_to_disk(Polygon_list* pl){
    for(std::list<Polygon_2>::iterator p = pl->begin(); p != pl->end(); ++p){
      // loop through vertcies of polygon
     for(Vertex_iterator v = p->vertices_begin(); v != p->vertices_end(); ++v){
-      f << v->x() << "\n";
-      f << v->y() << "\n";
+      f << std::fixed << std::setprecision(8) << v->x() << "\n";
+      f << std::fixed << std::setprecision(8) << v->y() << "\n";
     }
       f << "p\n";
 	 }
@@ -106,8 +107,8 @@ Polygon_2 from_disk(){
     }
     Polygon_2 polygon;
     int xory = 0; //# x = x , 1 = y , 2 = both
-    int x = -1;
-    int y = -1;
+    double x = -1;
+    double y = -1;
     for (size_t i = 0; i < lines.size(); i++) {
       if (lines[i] == "p"){
         break;
@@ -115,11 +116,15 @@ Polygon_2 from_disk(){
       else if (lines[i] != ""){
       }
           if (xory == 0){
+            // std::cout << "StrX:" << lines[i].c_str() << '\n';
             x = atof(lines[i].c_str());
+            // std::cout << "x:" << x << '\n';
             xory = 1;
           }
           else if (xory == 1){
+            // std::cout << "StrY:" << lines[i].c_str() << '\n';
             y = atof(lines[i].c_str());
+            // std::cout << "y:" << y << '\n';
             polygon.push_back(Point_2(x,y));
             x = -1;
             y = -1;
@@ -188,6 +193,7 @@ int main(int argc, char** argv)
    int radius = 10;
    int max_verticies = 10;
 	 bool isConvex = false;
+   //
   // Parses options that start with '-' and adding ':' makes an arg mandontory
   // r - double radius
   // v - int number_vertecies
@@ -214,12 +220,14 @@ int main(int argc, char** argv)
   }
   coordinate = Point_2(x,y);
   polygon = from_disk();
+  // std::cout << "Polygon:\n" << polygon << '\n';
+  
   // random_poly(radius, max_verticies, coordinate, &polygon);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
                                    std::back_inserter(partition_polys));
-   
+                                   
    assert(CGAL::convex_partition_is_valid_2(polygon.vertices_begin(),
                                             polygon.vertices_end(),
                                             partition_polys.begin(),

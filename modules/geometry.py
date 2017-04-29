@@ -270,6 +270,7 @@ def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
 # DON'T CONNECT THE LAST VERTEX TO FIRST VERTEX WITH AN OVERLAPPING VERTEXl
 def demoPolygon(selector):
     points = []
+    # square, concave, positive, integers
     if selector == 1:
         points.append(Point(0,0));
         points.append(Point(300,0));
@@ -279,6 +280,16 @@ def demoPolygon(selector):
         points.append(Point(100,100));
         points.append(Point(100,200));
         points.append(Point(0,200));
+    elif selector == 2:
+        # crooked, concave, negatives, and doubles
+        points.append(Point(-2.2,-3));
+        points.append(Point(300.55,0));
+        points.append(Point(300.55,200.25));
+        points.append(Point(200.25,200.25));
+        points.append(Point(200.25,100));
+        points.append(Point(100,100));
+        points.append(Point(100,200.25));
+        points.append(Point(0,200.25));
     else:
         print("There's no demo polygon that corressponds with your selection.")
     return Polygon(points)
