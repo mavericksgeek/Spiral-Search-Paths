@@ -113,14 +113,12 @@ def main():
     result = list()
 
     for index, polygon in enumerate(poly_list):
-        temp = polygon.getSpiralPathToCentroid(3)
+        temp = polygon.getSpiralPathToCentroid(7)
         result += temp
         if index < len(poly_list)-1:
             new_start_point = poly_list[index].getTransitionPathToNextPolygon(poly_list[index+1])
             index_of_point_in_next_polygon = next( (i for i, point in enumerate(poly_list[index+1].vertices) if point == new_start_point))
             poly_list[index+1].reorderVertice(index_of_point_in_next_polygon)
-
-        print("centroid:",polygon.centroid)
 
     print(result)
 
