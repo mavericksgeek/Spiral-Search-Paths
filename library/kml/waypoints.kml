@@ -1,0 +1,57 @@
+<Document>
+            <name>AirRobot Recorded Flight Track</name>
+
+            <Style id="yellowLine">
+            <LineStyle>
+            <color>5014F0FA</color>
+            <width>2</width>
+            </LineStyle>
+            </Style>
+            <Style id="redLine">
+            <LineStyle>
+            <color>ff3333CC</color>
+            <width>3</width>
+            </LineStyle>
+            </Style>
+            <Style id="greenLine">
+            <LineStyle>
+            <color>5014B482</color>
+            <width>3</width>
+            </LineStyle>
+            </Style>
+            <Style id="blueLine">
+            <LineStyle>
+            <color>90ff0000</color>
+            <width>3</width>
+            </LineStyle>
+            </Style>
+            <Style id="orangeLine">
+            <LineStyle>
+            <color>501478FF</color>
+            <width>2</width>
+            </LineStyle>
+            </Style>
+            <Style id="whiteLine">
+            <LineStyle>
+            <color>50FFFFFF</color>
+            <width>2</width>
+            </LineStyle>
+            </Style>
+        <Placemark>
+        <styleUrl>#yellowLine</styleUrl>
+        <LineString>
+        <width>20</width>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+					-96.35111282486872,30.57782135288359,95
+					-96.35105252319403,30.57773895273823,95
+					-96.35098278437623,30.57762028386826,95
+					-96.35096243867648,30.57760183127451,95
+					-96.35103855263765,30.57748613262665,95
+					-96.35116430471045,30.57746163602407,95
+					-96.35140293901858,30.57750257170256,95
+
+        </coordinates>
+        </LineString>
+        </Placemark>
+</Document>

@@ -21,7 +21,7 @@ p04 = Point(0.0,3.0)
 Poly2 = Polygon( [p01,p02,p03,p05,p04] )
 print(Poly2.isConvex())
 
-
+exportsKML(Polygon1.vertices)
 
 #createWaypointFile(Polygon1.vertices, 'test.txt')
 
