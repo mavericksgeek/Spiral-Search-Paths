@@ -102,26 +102,72 @@ def getSubDivision(polygon):
     call(["./executable"]) # c++ cgal program
     return poly_list_from_disk()
 
+def getLeftMostPolygon(polyList):
+    """Linearly searches through list of polygons for point with lowest x value.
+    Returns index of polygon with that point"""
+    if len(polyList) == 0:
+        print("Error: Can't getLeftMostPolygon if there's no polygons")
+        return None
+    leftmostPoint = polyList[0].vertices[0]
+    leftmostPolyIndex = 0
+    for i,polygon in enumerate(polyList):
+        for vert in polygon.vertices:
+            if vert.x < leftmostPoint.x:
+                leftmostPoint = vert
+                leftmostPolyIndex = i
+    return leftmostPolyIndex
+
+def getAdjacentPolygon(polygonA, polyList):
+    """Finds a polygon geometrically adjacent to polygonA"""
+    for i,poly in enumerate(polyList):
+        intersectPts = list(set(poly.vertices).intersection(set(polygonA.vertices)))
+        if len(intersectPts) >= 2:
+            return i
+    print("Error: Can't find adjacent polygon")
+
+def reorderPolygons(polyList):
+    """Puts geometrically adjacent polygons next to each other in a list"""
+    if len(polyList) == 0:
+        print("Error: Can't reorderPolygons if there's no polygons!")
+        return []
+    path = []
+    nextPolyIndex = getLeftMostPolygon(polyList)
+    orginal_poly_count = len(polyList)
+    while len(polyList) > 0:
+        path.append(polyList[nextPolyIndex])
+        temp = getAdjacentPolygon(polyList[nextPolyIndex], polyList)
+        del polyList[nextPolyIndex]
+        nextPolyIndex = temp
+    if len(path) == orginal_poly_count:
+        return path
+    else:
+        print("Error: Couldn't reorder polygons in list!")
+
 def main():
+    print("Loading the experiment parameters")
+    createRandomPolygons = True
+    if createRandomPolygons == True:
+        poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 5)
+    else:
+        poly = demoPolygon(3)
+
     print("Experimented Started")
-    poly = demoPolygon(3)
-    # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 5)
+    print("Logging:\n\
+    Verticies:" + str(len(poly.vertices)))
     poly_list = getSubDivision(poly)
     poly_list = poly_list_from_disk()
-    print(poly_list)
-    print("Polygon List")
-    result = list()
-
+    poly_list = reorderPolygons(poly_list)
+    searchPath = list()
     for index, polygon in enumerate(poly_list):
         temp = polygon.getSpiralPathToCentroid(7)
-        result += temp
+        searchPath += temp
         if index < len(poly_list)-1:
             new_start_point = poly_list[index].getTransitionPathToNextPolygon(poly_list[index+1])
             index_of_point_in_next_polygon = next( (i for i, point in enumerate(poly_list[index+1].vertices) if point == new_start_point))
             poly_list[index+1].reorderVertice(index_of_point_in_next_polygon)
-    
-    # Exports the search path to mission planner
-    exportsMissionPlannerFile(result, fileName="waypoints.txt")
+
+    # Exports outputs
+    exportsMissionPlannerFile(searchPath, fileName="waypoints.txt")
 
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
