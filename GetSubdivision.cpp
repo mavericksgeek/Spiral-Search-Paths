@@ -1,8 +1,8 @@
 // Install CGAL: http://www.cgal.org/download/linux.html
 // Tutorial: http://doc.cgal.org/latest/Partition_2/index.html
-// cd /path/to/program 
-// cgal_create_CMakeLists -s executable 
-// cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 . 
+// cd /path/to/program
+// cgal_create_CMakeLists -s executable
+// cmake -DCGAL_DIR=$HOME/CGAL-4.9.1 .
 // make
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
@@ -69,7 +69,7 @@ void random_poly(double radius, int number_vertecies, Point_2 coordinate,
     Point_2 temp(x,y);
     *it = temp;
   }
-  
+
   // Turn points into a polygon
   CGAL::random_polygon_2(point_set.size(), std::back_inserter(polygon),
                         point_set.begin());
@@ -151,36 +151,11 @@ void make_test_polygon(Polygon_2& polygon)
 	polygon.push_back(Point_2(0,200));
 	polygon.push_back(Point_2(0,0));
 
-	
+
 }
 
-// Prints polygon in svg format
-// std::string svg_poly(Polygon_2& polygon, std::string stroke_color, std::string fill_color){
-//   std::string body = "";
-// 	body += "<polygon points=\"";
-// 	for(Vertex_iterator it = polygon.vertices_begin(); it != polygon.vertices_end(); ++it){
-//  //@TODO: Solve later
-// 		// body += std::to_string(it->x()) + "," + std::to_string(it->y()) + " ";
-// 	}
-// 	body += "\" style=\"fill:" + fill_color + "; stroke:" + stroke_color + 
-// 	"stroke-width:1\" />" + "\n";
-//   return body;
-// }
 
-// Converts a polygon list into an svg string
-// void to_svg(Polygon_list pl){
-//   std::string body ="";
-//   std::string path = "logs/out.svg";
-//   std::ofstream f(path.c_str());
-//   for(std::list<Polygon_2>::iterator it = pl.begin(); it != pl.end(); ++it){
-//     body += svg_poly(*it, "white", "blue");
-//   }
-// 	f << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << '\n';
-// 	f << body << '\n';
-// 	f << "</svg>" << '\n';
-// }
-
-// @TODO: Output as list of x y points counter clockwise	
+// @TODO: Output as list of x y points counter clockwise
 // @TODO: Log data
 int main(int argc, char** argv)
 {
@@ -221,13 +196,13 @@ int main(int argc, char** argv)
   coordinate = Point_2(x,y);
   polygon = from_disk();
   // std::cout << "Polygon:\n" << polygon << '\n';
-  
+
   // random_poly(radius, max_verticies, coordinate, &polygon);
   //Hertel Melhorn (Do not connect the last line)
    CGAL::approx_convex_partition_2(polygon.vertices_begin(),
                                    polygon.vertices_end(),
                                    std::back_inserter(partition_polys));
-                                   
+
    assert(CGAL::convex_partition_is_valid_2(polygon.vertices_begin(),
                                             polygon.vertices_end(),
                                             partition_polys.begin(),
