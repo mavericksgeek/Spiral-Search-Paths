@@ -104,7 +104,7 @@ def getSubDivision(polygon):
 
 def main():
     print("Experimented Started")
-    poly = demoPolygon(1)
+    poly = demoPolygon(3)
     # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 5)
     poly_list = getSubDivision(poly)
     poly_list = poly_list_from_disk()
@@ -119,8 +119,9 @@ def main():
             new_start_point = poly_list[index].getTransitionPathToNextPolygon(poly_list[index+1])
             index_of_point_in_next_polygon = next( (i for i, point in enumerate(poly_list[index+1].vertices) if point == new_start_point))
             poly_list[index+1].reorderVertice(index_of_point_in_next_polygon)
-
-    print(result)
+    
+    # Exports the search path to mission planner
+    exportsMissionPlannerFile(result, fileName="waypoints.txt")
 
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]

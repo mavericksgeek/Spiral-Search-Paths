@@ -290,6 +290,15 @@ def demoPolygon(selector):
         points.append(Point(100,100));
         points.append(Point(100,200.25));
         points.append(Point(0,200.25));
+    elif selector == 3:
+        points.append(Point(30.577799,-96.353317));
+        points.append(Point(30.578707,-96.353378));
+        points.append(Point(30.578753,-96.351288));
+        points.append(Point(30.577923,-96.351219));
+        points.append(Point(30.577894,-96.351845));
+        points.append(Point(30.578329,-96.351959));
+        points.append(Point(30.578365,-96.352837));
+        points.append(Point(30.577894,-96.352768));
     else:
         print("There's no demo polygon that corressponds with your selection.")
     return Polygon(points)
