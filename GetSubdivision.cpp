@@ -62,7 +62,8 @@ void random_poly(double radius, int number_vertecies, Point_2 coordinate,
   // std::copy(point_set.begin(), point_set.end(), out);
   // std::cout << std::endl;
   // Move polygon near coordinate by translating all points
-  int x,y = 0;
+  double x = 0.0;
+  double y = 0.0;
   for(Point_Iter it = point_set.begin(); it != point_set.end(); ++it ){
     x = it->x() + coordinate.x();
     y = it->y() + coordinate.y();
@@ -163,9 +164,9 @@ int main(int argc, char** argv)
    Polygon_2    polygon;
    Polygon_list partition_polys;
    Point_2 coordinate;
-   int x = 10;
-   int y = 10;
-   int radius = 10;
+   double x = 10;
+   double y = 10;
+   double radius = 10;
    int max_verticies = 10;
 	 bool isConvex = false;
    //
@@ -178,13 +179,13 @@ int main(int argc, char** argv)
   while ((opt = getopt(argc, argv, "r:v:x:y:")) != -1){
    switch(opt) {
      case 'x':
-         x = atoi(optarg);
+         x = atof(optarg);
          break;
      case 'y':
-         y = atoi(optarg);
+         y = atof(optarg);
          break;
      case 'r':
-        radius = atoi(optarg);
+        radius = atof(optarg);
         break;
      case 'v':
         max_verticies = atoi(optarg);

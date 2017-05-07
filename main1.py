@@ -52,7 +52,7 @@ def getSubDivision(polygon):
     polygon.to_disk()
     call(["./executable"]) # c++ cgal program
     return poly_list_from_disk()
-
+# @TODO: Move polyList functions to a class
 def getLeftMostPolygon(polyList):
     """Linearly searches through list of polygons for point with lowest x value.
     Returns index of polygon with that point"""
@@ -98,14 +98,18 @@ def main():
     print("Loading the experiment parameters")
     createRandomPolygons = True
     if createRandomPolygons == True:
-        poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 5)
+        # @TODO: Cannot use because sides intersect (not a simple polygon)
+        # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 15)
+        
+        # area latitude & longitude, size of bounding box sides, vertex count
+        poly = getCGALRandomPolygon(30.5775025, -96.3511128, .100, 15)
+        poly_list = getSubDivision()
     else:
         poly = demoPolygon(3)
-
+        poly_list = getSubDivision(poly)
     print("Experimented Started")
     print("Logging:\n\
     Verticies:" + str(len(poly.vertices)))
-    poly_list = getSubDivision(poly)
     poly_list = poly_list_from_disk()
     poly_list = reorderPolygons(poly_list)
     searchPath = list()
