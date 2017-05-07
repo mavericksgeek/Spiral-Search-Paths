@@ -6,14 +6,20 @@
 ### Use these common names so that we can merge code easily later.   ###
 ### DO NOT CHANGE THE FUNCTION NAMES, INPUTS, OR RETURN OUTPUT TYPE! ###
 ########################################################################
-
+from __future__ import print_function
 from modules.geometry import *
 from modules.export import *
 from subprocess import call
 
 ## Function ##############################################
 
-
+# Output path points which can be easily pasted in a Google Earth kml file
+def export_search_path_to_kml(searchPathWayPoints, altitude, filename):
+    build_string = "Spiral Path:\n"
+    for wp in searchPathWayPoints:
+        build_string += str(wp.x) + "," + str(wp.y) + "," + str(altitude) + "\n"
+    fs = open(filename, "w")
+    print(build_string, file=fs)
 
 # Reads polygon list from disk; must be called after to_disk or cgal code
 def poly_list_from_disk():
@@ -98,6 +104,7 @@ def reorderPolygons(polyList):
 
 def main():
     print("Loading the experiment parameters")
+    # Determines whether to use a random, code defined, or disk defined polygon
     createRandomPolygons = True
     if createRandomPolygons == True:
         # @TODO: Cannot use because sides intersect (not a simple polygon)
@@ -109,6 +116,7 @@ def main():
     else:
         poly = demoPolygon(3)
         poly_list = getSubDivision(poly)
+
     print("Generating Search Path")
     poly_list = poly_list_from_disk()
     poly_list = reorderPolygons(poly_list)
@@ -123,6 +131,7 @@ def main():
 
     print("Exporting outputs")
     exportsMissionPlannerFile(searchPath, fileName="waypoints.txt")
+    export_search_path_to_kml(searchPath, 100.0, "kmloutput.txt")
 
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
