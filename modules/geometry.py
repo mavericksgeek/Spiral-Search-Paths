@@ -273,19 +273,18 @@ class Polygon:
 #     return poly
 
 # Helper Functions, outside of class #####################################
-def getCGALRandomPolygon(lat, log, s, v):
+def genCGALRandomPolygon(lat, log, s, max_verts):
     """Generates a random simple polygon at coordinate within a bounding square
     lat,log are the latitude and longitude (floating point)
-    s is the side length of the bounding square
-    v is the number of verticies in the shape"""
+    s is the side length of the bounding square (aka radius r)
+    max_verts is the number of verticies in the shape"""
     # @TODO: c if true, the shape is convex, otherwise it is concave"""
     cmd = "./executable"
-    cmd = cmd + " r" + str(lat)
-    cmd = cmd + " v" + str(log)
-    cmd = cmd + " x" + str(s)
-    cmd = cmd + " y" + str(v)
-
-    call([cmd]) # c++ cgal program
+    y = str(lat)
+    x = str(log)
+    r = str(s)
+    v = str(max_verts)
+    call([cmd, "-r", r, "-v", v, "-x", x, "-y", y]) # c++ cgal program
 
 
 

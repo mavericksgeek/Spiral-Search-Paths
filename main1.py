@@ -48,8 +48,10 @@ def poly_list_from_disk():
     return polygons
 
 # Returns a list of 1 or more convex polygons
-def getSubDivision(polygon):
-    polygon.to_disk()
+def getSubDivision(polygon, usePolygon = True):
+    # Don't use the python polygon if it's generated in getSubDivision.cpp
+    if usePolygon:
+        polygon.to_disk()
     call(["./executable"]) # c++ cgal program
     return poly_list_from_disk()
 # @TODO: Move polyList functions to a class
@@ -100,16 +102,14 @@ def main():
     if createRandomPolygons == True:
         # @TODO: Cannot use because sides intersect (not a simple polygon)
         # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 15)
-        
+
         # area latitude & longitude, size of bounding box sides, vertex count
-        poly = getCGALRandomPolygon(30.5775025, -96.3511128, .100, 15)
-        poly_list = getSubDivision()
+        genCGALRandomPolygon(30.5775025, -96.3511128, .100, 10)
+        poly_list = getSubDivision(None, False)
     else:
         poly = demoPolygon(3)
         poly_list = getSubDivision(poly)
-    print("Experimented Started")
-    print("Logging:\n\
-    Verticies:" + str(len(poly.vertices)))
+    print("Generating Search Path")
     poly_list = poly_list_from_disk()
     poly_list = reorderPolygons(poly_list)
     searchPath = list()
@@ -121,7 +121,7 @@ def main():
             index_of_point_in_next_polygon = next( (i for i, point in enumerate(poly_list[index+1].vertices) if point == new_start_point))
             poly_list[index+1].reorderVertice(index_of_point_in_next_polygon)
 
-    # Exports outputs
+    print("Exporting outputs")
     exportsMissionPlannerFile(searchPath, fileName="waypoints.txt")
 
     """
