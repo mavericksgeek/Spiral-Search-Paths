@@ -12,6 +12,32 @@ from modules.export import *
 from subprocess import call
 
 ## Function ##############################################
+# Reads input.txt and converts the points into a boundry polygon
+def polygon_from_disk():
+    # read from file
+    f = open("input.txt", "r")
+    lines = f.readlines()
+    points = []
+    polygon = Polygon([Point(0,0)]) #Empty Polygon
+    xory = 0 # x = 0 , 1 = y , 2 = both
+    x = -1
+    y = -1
+    for line in lines:
+        line = "".join(line.split()) # remove ALL whitespace
+        line = line.split(",")
+        if line != "":
+            x = float(line[0])
+            y = float(line[1])
+            p = Point(x,y)
+            points.append(p)
+            xory = 0
+            x = -1
+            y = -1
+        else:
+            print("Error from_disk(): Unknown character" + str(line))
+    polygon.vertices = points
+    return polygon
+
 # (INTERNAL) Returns a polygon; must be called after genCGALRandomPolygon
 def polygon_from_CGAL():
     f = open("poly.txt", "r")
@@ -24,7 +50,9 @@ def polygon_from_CGAL():
     for line in lines:
         line = "".join(line.split()) # remove ALL whitespace
         if line != "":
-            if xory == 0:
+            if line == "p":
+                pass # ignore p's
+            elif xory == 0:
                 x = float(line)
                 xory = 1
             elif xory == 1:
@@ -37,6 +65,7 @@ def polygon_from_CGAL():
         else:
             print("Error from_disk(): Unknown character" + str(line))
     polygon.vertices = points
+    print(polygon)
     return polygon
 
 # Output path points which can be easily pasted in a Google Earth kml file
@@ -133,17 +162,18 @@ def reorderPolygons(polyList):
 
 def main():
     print("Loading the experiment parameters")
-    # Determines whether to use a random, code defined, or disk defined polygon
-    createRandomPolygons = True
-    if createRandomPolygons == True:
-        # @TODO: Cannot use because sides intersect (not a simple polygon)
-        # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 15)
+    # if true, will create a random polygon with the listed parameters
+    # if false, will read a polygon from input.txt in the following format:
 
+    createRandomPolygons = False
+
+    # @TODO: for loop here to do 25 trials
+    if createRandomPolygons == False:
         # area latitude & longitude, size of bounding box sides, vertex count
         genCGALRandomPolygon(30.5775025, -96.3511128, .001, 10)
         poly_list = getSubDivision(None, False)
     else:
-        poly = demoPolygon(3)
+        poly = polygon_from_disk()
         poly_list = getSubDivision(poly)
 
     print("Generating Search Path")
@@ -154,7 +184,9 @@ def main():
         temp = polygon.getSpiralPathToCentroid(7)
         searchPath += temp
         if index < len(poly_list)-1:
+            # @TODO: Modify getTransitionPathToNextPolygon to return -1 on error
             new_start_point = poly_list[index].getTransitionPathToNextPolygon(poly_list[index+1])
+            # @TODO: if new_start_point == -1 then add another trial an break
             index_of_point_in_next_polygon = next( (i for i, point in enumerate(poly_list[index+1].vertices) if point == new_start_point))
             poly_list[index+1].reorderVertice(index_of_point_in_next_polygon)
 
