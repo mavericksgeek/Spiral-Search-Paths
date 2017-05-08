@@ -12,16 +12,45 @@ from modules.export import *
 from subprocess import call
 
 ## Function ##############################################
+# (INTERNAL) Returns a polygon; must be called after genCGALRandomPolygon
+def polygon_from_CGAL():
+    f = open("poly.txt", "r")
+    lines = f.readlines()
+    polygon = Polygon([Point(0,0)]) #Empty Polygon
+    points = []
+    xory = 0 # x = 0 , 1 = y , 2 = both
+    x = -1
+    y = -1
+    for line in lines:
+        line = "".join(line.split()) # remove ALL whitespace
+        if line != "":
+            if xory == 0:
+                x = float(line)
+                xory = 1
+            elif xory == 1:
+                y = float(line)
+                p = Point(x,y)
+                points.append(p)
+                xory = 0
+                x = -1
+                y = -1
+        else:
+            print("Error from_disk(): Unknown character" + str(line))
+    polygon.vertices = points
+    return polygon
 
 # Output path points which can be easily pasted in a Google Earth kml file
-def export_search_path_to_kml(searchPathWayPoints, altitude, filename):
-    build_string = "Spiral Path:\n"
-    for wp in searchPathWayPoints:
+def export_search_path_to_kml(boundry_polygon, pathWayPoints, altitude, filename):
+    build_string = "Boundry Polygon:\n"
+    for v in boundry_polygon.vertices:
+        build_string += str(v.x) + "," + str(v.y) + "," + str(altitude) + "\n"
+    build_string += "\nSpiral Path:\n"
+    for wp in pathWayPoints:
         build_string += str(wp.x) + "," + str(wp.y) + "," + str(altitude) + "\n"
     fs = open(filename, "w")
     print(build_string, file=fs)
 
-# Reads polygon list from disk; must be called after to_disk or cgal code
+# (INTERNAL) Reads polygon list from disk; must be called after to_disk or cgal code
 def poly_list_from_disk():
     # read from file
     f = open("polyList.txt", "r")
@@ -111,7 +140,7 @@ def main():
         # poly = getRandomPolygon(-963514029, -963511128, 305775025, 305778213, 15)
 
         # area latitude & longitude, size of bounding box sides, vertex count
-        genCGALRandomPolygon(30.5775025, -96.3511128, .100, 10)
+        genCGALRandomPolygon(30.5775025, -96.3511128, .001, 10)
         poly_list = getSubDivision(None, False)
     else:
         poly = demoPolygon(3)
@@ -131,7 +160,7 @@ def main():
 
     print("Exporting outputs")
     exportsMissionPlannerFile(searchPath, fileName="waypoints.txt")
-    export_search_path_to_kml(searchPath, 100.0, "kmloutput.txt")
+    export_search_path_to_kml(polygon_from_CGAL(), searchPath, 100.0, "kmloutput.txt")
 
     """
     #decomposedPolygons = [polygon1, polygon2, polygon3, polygon4]
