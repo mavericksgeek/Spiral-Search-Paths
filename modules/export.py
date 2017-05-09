@@ -1,5 +1,5 @@
 def exportsMissionPlannerFile(list_of_waypoints, fileName="waypoints.txt"):
-    path ="./library/mission_planner"
+    path ="./library/mission_planner/"
     ######## paramters ########
     target_component = 0
     seq = 0

@@ -1,6 +1,8 @@
 from __future__ import print_function
 import random
 import math
+from subprocess import call
+
 class Point:
 
     def __init__(self, x, y):
@@ -240,32 +242,52 @@ class Polygon:
         string = self.to_string()
         print(string, file=f)
 
-
-
-def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
-    poly = Polygon([Point(1,1)])
-    poly.vertices = list() #initilize the "blank" polygon
-    if min_log > max_log:
-        min_log, max_log = max_log, min_log
-    if min_lat > max_lat:
-        min_lat, max_lat = max_lat, min_lat
-
-    length_min_log = len(str(min_log).replace('-',''))
-    #length_max_log = len(str(max_log))
-    length_min_lat = len(str(min_lat).replace('-',''))
-    #length_max_lat = len(str(max_lat))
-
-    #generate number of points
-    for i in range(0, n_of_vertices):
-        log = random.randint(min_log, max_log) / (10.0 ** (length_min_log-2))
-        lat = random.randint(min_lat, max_lat) / (10.0 ** (length_min_lat-2))
-        poly.vertices.append(Point(log,lat))
-
-    #sort them in the order of counter-clockwise
-    poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y-poly.centroid.y, point.x-poly.centroid.x), reverse=True)
-    return poly
+# # @TODO: Cannot use because sides intersect (not a simple polygon)
+# def getRandomPolygon(min_log, max_log, min_lat, max_lat, n_of_vertices):
+#     poly = Polygon([Point(1,1)])
+#     poly.vertices = list() #initilize the "blank" polygon
+#     if min_log > max_log:
+#         min_log, max_log = max_log, min_log
+#     if min_lat > max_lat:
+#         min_lat, max_lat = max_lat, min_lat
+#
+#     # Find number of digits of positive version
+#     length_min_log = len(str(min_log).replace('-',''))
+#     #length_max_log = len(str(max_log))
+#     length_min_lat = len(str(min_lat).replace('-',''))
+#     #length_max_lat = len(str(max_lat))
+#
+#     #generate number of points
+#     for i in range(0, n_of_vertices):
+#         log = random.randint(min_log, max_log) / (10.0 ** (length_min_log-2))
+#         lat = random.randint(min_lat, max_lat) / (10.0 ** (length_min_lat-2))
+#         poly.vertices.append(Point(log,lat))
+#
+#     #sort them in the order of counter-clockwise
+#     poly.vertices = sorted(poly.vertices, key = lambda point: -math.atan2(point.y-poly.centroid.y, point.x-poly.centroid.x), reverse=True)
+#
+#     #Don't overlap the first and last points (remove if they overlapp)
+#     print(str(poly.vertices[0]) + "==" + str(poly.vertices[-1]))
+#     if poly.vertices[0] == poly.vertices[-1]:
+#         del poly.vertices[-1]
+#     return poly
 
 # Helper Functions, outside of class #####################################
+def genCGALRandomPolygon(lat, log, s, max_verts):
+    """Generates a random simple polygon at coordinate within a bounding square
+    lat,log are the latitude and longitude (floating point)
+    s is the side length of the bounding square (aka radius r)
+    max_verts is the number of verticies in the shape"""
+    # @TODO: c if true, the shape is convex, otherwise it is concave"""
+    cmd = "./executable"
+    y = str(lat)
+    x = str(log)
+    r = str(s)
+    v = str(max_verts)
+    call([cmd, "-r", r, "-v", v, "-x", x, "-y", y]) # c++ cgal program
+
+
+
 # Creates the polygon specified by selector
 # DON'T CONNECT THE LAST VERTEX TO FIRST VERTEX WITH AN OVERLAPPING VERTEXl
 def demoPolygon(selector):
@@ -290,6 +312,15 @@ def demoPolygon(selector):
         points.append(Point(100,100));
         points.append(Point(100,200.25));
         points.append(Point(0,200.25));
+    elif selector == 3:
+        points.append(Point(30.577799,-96.353317));
+        points.append(Point(30.578707,-96.353378));
+        points.append(Point(30.578753,-96.351288));
+        points.append(Point(30.577923,-96.351219));
+        points.append(Point(30.577894,-96.351845));
+        points.append(Point(30.578329,-96.351959));
+        points.append(Point(30.578365,-96.352837));
+        points.append(Point(30.577894,-96.352768));
     else:
         print("There's no demo polygon that corressponds with your selection.")
     return Polygon(points)
